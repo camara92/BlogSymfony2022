@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Post;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 //use App\DataFixtures;
@@ -23,7 +24,7 @@ class AppFixtures extends Fixture
             $post->setTitle($faker->sentence($nbWords =2, $varibleNbWords =true));
             $post->setContent($faker->sentence($nbWords =15, $varibleNbWords =true));
             $post->setAuthor($faker->name());
-            $post->setCreatedAt($faker->dateTimeBetween('-6 month'));
+            $post->setCreatedAt(date_create_immutable());
             $manager->persist($post);
         }
         $manager->flush();
