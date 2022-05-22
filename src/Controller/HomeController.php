@@ -3,32 +3,31 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-use App\DataFixtures\AppFixtures;
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    /**
+     * @Route("/home", name="home")
+     */
+    public function index(PostRepository $ripo)
     {
-        // $post = new Post();
-        // $post = new Post();
-        // $post->setTitle("Titre");
-        // $post->setContent('Daouda est un développeur de nom ');
-        // $post->setAuthor('CAMARA Daouda');
-        // $post->setCreatedAt(date_create_immutable());
+        $post = $ripo->findAll();
 
-
-        //dd($post);
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-           
-            
-           
+            'post' => $post
         ]);
     }
-    
+
+    /**
+     * @Route("/post/{id}", name="show_post")
+     */
+    public function show(Post $post)
+    {
+        return $this->render('home/post.html.twig', [
+            'post' => $post
+        ]);
+    }
 }
